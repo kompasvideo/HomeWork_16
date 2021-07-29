@@ -142,6 +142,7 @@ namespace HomeWork_15_WPF.Services
             {
                 messageParams.Clear();
                 messageParams = DeserializeMessageList("_listMessage_10_000_000.xml");
+                messageParams.Clear();
             });
         }
 
