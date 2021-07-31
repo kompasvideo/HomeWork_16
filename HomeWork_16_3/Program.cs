@@ -14,6 +14,7 @@ namespace HomeWork_16_3
         static Stopwatch stopWatch2;
         const int dimension_1 = 1000;
         const int dimension_2 = 2000;
+        const int dimension_3 = 30000;
         static int[,] matrix_1;
         static int[,] matrix_2;
         static int[,] matrix_Result;
@@ -24,7 +25,7 @@ namespace HomeWork_16_3
         {
             CreateMatrix();
             stopWatch = new Stopwatch();
-            Console.WriteLine($"Переумножение матриц {dimension_1},{dimension_2} на {dimension_2},{dimension_1} в однопотоке");
+            Console.WriteLine($"Переумножение матриц {dimension_1},{dimension_2} на {dimension_2},{dimension_3} в однопотоке");
             stopWatch.Start();
             for (int cycle = 0; cycle < dimension_1; cycle++)
             {
@@ -38,7 +39,7 @@ namespace HomeWork_16_3
             Console.WriteLine("RunTime " + elapsedTime);
 
             stopWatch2 = new Stopwatch();
-            Console.WriteLine($"\n\nПереумножение матриц {dimension_1},{dimension_2} на {dimension_2},{dimension_1} в многопотоке");
+            Console.WriteLine($"\n\nПереумножение матриц {dimension_1},{dimension_2} на {dimension_2},{dimension_3} в многопотоке");
             Calculate();
             TimeSpan ts2 = stopWatch2.Elapsed;
             elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
@@ -54,14 +55,20 @@ namespace HomeWork_16_3
         {
             Random rnd = new Random();
             matrix_1 = new int[dimension_1, dimension_2];
-            matrix_2 = new int[dimension_2, dimension_1];
-            matrix_Result = new int[dimension_1, dimension_1];
+            matrix_2 = new int[dimension_2, dimension_3];
+            matrix_Result = new int[dimension_1, dimension_3];
             for (int i= 0; i < dimension_1; i++)
             {
                 for (int k = 0; k < dimension_2; k++)
                 {
                     matrix_1[i, k] = rnd.Next(0, 101);
-                    matrix_2[k, i] = rnd.Next(0, 101);
+                }
+            }
+            for (int i = 0; i < dimension_2; i++)
+            {
+                for (int k = 0; k < dimension_3; k++)
+                {
+                    matrix_2[i, k] = rnd.Next(0, 101);
                 }
             }
         }
@@ -102,7 +109,7 @@ namespace HomeWork_16_3
         {
             cycle = 0;
             stopWatch2.Start();
-            Parallel.For(0, dimension_1, Calculate1);
+            Parallel.For(0, dimension_2, Calculate1);
             stopWatch2.Stop();
         }
 
@@ -113,9 +120,9 @@ namespace HomeWork_16_3
             {
                 for (int i = 0; i < dimension_1; i++)
                 {
-                    for (int k = 0; k < dimension_2; k++)
+                    for (int k = 0; k < dimension_3; k++)
                     {
-                        matrix_Result[cycle, i] += matrix_1[i, k] * matrix_2[k, cycle];
+                        matrix_Result[cycle, i] += matrix_1[i, cycle] * matrix_2[cycle,k];
                     }
                 }
             }
@@ -126,9 +133,9 @@ namespace HomeWork_16_3
         {
             for (int i = 0; i < dimension_1; i++)
             {
-                for (int k = 0; k < dimension_2; k++)
+                for (int k = 0; k < dimension_3; k++)
                 {
-                    matrix_Result[cycle, i] += matrix_1[i, k] * matrix_2[k, cycle];
+                    matrix_Result[cycle, i] += matrix_1[i,cycle] * matrix_2[cycle,k];
                 }
             }
             cycle++;
