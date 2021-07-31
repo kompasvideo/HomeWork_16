@@ -4,11 +4,11 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-<configuration>  
-  <runtime>  
-    <gcAllowVeryLargeObjects enabled="true" />  
-  </runtime>  
-</configuration>  
+    <configuration>
+      <runtime>
+        <gcAllowVeryLargeObjects enabled="true" />
+      </runtime>
+    </configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{ADC550A5-22B4-4269-A6B6-F5B790B9FD4D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -185,9 +185,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HomeWork_16_Dll\HomeWork_16_Dll.csproj">
+    <ProjectReference Include="..\HomeWork_16_Dll\HomeWork_16_1_Dll.csproj">
       <Project>{17c734fd-c93c-4539-abb2-88029f6d5658}</Project>
-      <Name>HomeWork_16_Dll</Name>
+      <Name>HomeWork_16_1_Dll</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
