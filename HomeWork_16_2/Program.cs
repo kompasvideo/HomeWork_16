@@ -13,11 +13,15 @@ namespace HomeWork_16_2
     {
         static int[] mas;
         static Stopwatch stopWatch;
+        static Stopwatch stopWatch2;
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Однопоточный режим");
             stopWatch = new Stopwatch();
-            int i = Calculate();
+            stopWatch.Start();
+            int i = CalculateOne();
+            stopWatch.Stop();
             Console.WriteLine($"Количество чисел {i}");
             TimeSpan ts = stopWatch.Elapsed;
 
@@ -25,9 +29,35 @@ namespace HomeWork_16_2
                 ts.Hours, ts.Minutes, ts.Seconds,
                 ts.Milliseconds / 10);
             Console.WriteLine("RunTime " + elapsedTime);
+
+            Console.WriteLine("\n\nМнопоточный режим");
+            stopWatch2 = new Stopwatch();
+            int i2 = Calculate();
+            Console.WriteLine($"Количество чисел {i2}");
+            TimeSpan ts2 = stopWatch2.Elapsed;
+
+            string elapsedTime2 = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts2.Hours, ts2.Minutes, ts2.Seconds,
+                ts2.Milliseconds / 10);
+            Console.WriteLine("RunTime " + elapsedTime2);
             Console.ReadKey();
         }
-
+        static int CalculateOne()
+        {
+            int numbers = 0;
+            for (int i = 1_000_000_000; i < 2_000_000_000; i++)
+            {
+                int endDigit = i - i / 10 * 10;
+                if (endDigit != 0)
+                {
+                    if ((i % endDigit) == 0)
+                    {
+                        numbers++;
+                    }
+                }
+            }
+            return numbers;
+        }
 
         static int Calculate()
         {
@@ -53,7 +83,7 @@ namespace HomeWork_16_2
                 mas[potok] = 2_000_000_000;
             }
             var tasks = new List<Task<int>>();
-            stopWatch.Start();
+            stopWatch2.Start();
             for (int k = 0; k < potok; k++)
             {
                 tasks.Add(Task<int>.Factory.StartNew(action, k));
@@ -64,7 +94,7 @@ namespace HomeWork_16_2
             {
                 numbers += task.Result;
             }
-            stopWatch.Stop();
+            stopWatch2.Stop();
             return numbers;                      
         }
 
